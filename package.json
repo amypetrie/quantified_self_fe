@@ -1,0 +1,26 @@
+{
+  "name": "quantified_self_1",
+  "version": "1.0.0",
+  "description": "Quantified Self paired project.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "calories",
+    "api"
+  ],
+  "author": "Amy Petrie and Norman Schultz",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "pryjs": "^1.0.3"
+  }
+}
