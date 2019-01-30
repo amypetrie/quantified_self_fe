@@ -15,16 +15,16 @@ body {
     max-width: 1140px;
 }
 a {
-    color: #1bdcde;
+    color: #40a250;
     text-decoration: none;
     cursor: pointer;
 }
 a:hover {
-    color: #1bdcde;
+    color: #40a250;
     text-decoration: underline;
 }
 a:visited, a:active, a:focus {
-     color:#1bdcde;
+     color:#40a250;
 }
 p, li {
     font-size: 16px;
@@ -70,7 +70,7 @@ img {
     height: auto;
 }
 .btn {
-    background: #1bdcde;
+    background: #40a250;
     color: #ffffff;
     border-radius: 8px;
     padding: 10px 20px;
@@ -80,7 +80,7 @@ img {
 }
 .btn:hover {
     color: #ffffff;
-    background: #1bdcde;
+    background: #40a250;
 }
 .btn:visited, .btn:active, .btn:focus {
      color:#ffffff;
@@ -92,7 +92,7 @@ img {
 }
 .btn-outline:hover {
     background: #fff;
-    color: #1bdcde;
+    color: #40a250;
 }
 .btn-outline:visited, .btn-outline:active, .btn-outline:focus {
      color: #ffffff;
@@ -102,7 +102,7 @@ hr {
     width: 70px;
     text-align: center;
     position: relative;
-    background: #1bdcde;
+    background: #40a250;
     margin: 0 auto;
     margin-bottom: 0px;
     margin-bottom: 20px;
@@ -118,7 +118,7 @@ hr {
 }
 #back-to-top i {
     font-size: 48px;
-    color: #1bdcde;
+    color: #40a250;
     -webkit-transition: all 300ms ease-out;
     -moz-transition: all 300ms ease-out;
     -ms-transition: all 300ms ease-out;
@@ -127,7 +127,7 @@ hr {
     opacity: .6;
 }
 #back-to-top i:hover {
-    color: #1bdcde;
+    color: #40a250;
     opacity: 1;
 }
 #back-to-top i:hover {
@@ -187,7 +187,7 @@ nav.navbar-inverse {
     border-bottom: none;
 }
 nav .navbar-brand {
-    color:#1bdcde!important;
+    color:#40a250!important;
 }
 nav .navbar-collapse {
     background: #3a3a3a;
@@ -204,22 +204,22 @@ nav.shrink {
     background: #fff;
 }
 nav.shrink .navbar-brand {
-    color:#1bdcde!important;
+    color:#40a250!important;
 }
 nav.shrink .navbar-toggle {
-    background:#1bdcde;
+    background:#40a250;
 }
 nav.shrink a {
     color:#535353!important;
 }
 nav a.active {
-    color:#1bdcde!important;
+    color:#40a250!important;
 }
 /*--------------------------------------- BANNER -------------------------------------------------*/
 .banner {
-    background: url(../images/hero.png) no-repeat center center;
+    background: url(../images/banner.png) no-repeat center center;
     background-size: cover;
-    box-shadow: 0px 0px 0px 2038px rgba(0, 0, 0, 0.30) inset;
+    box-shadow: 0px 0px 0px 2038px rgba(0, 0, 0, 0.62) inset;
     margin-bottom: 0;
 }
 .banner .jumbotron {
@@ -259,8 +259,8 @@ nav a.active {
     margin-bottom:30px;
 }
 .services .service-boxes .box .circle-icon {
-    border: 2px solid #1bdcde;
-    background:#1bdcde;
+    border: 2px solid #40a250;
+    background:#40a250;
     color: #fff;
     width: 60px;
     height: 60px;
@@ -295,7 +295,7 @@ nav a.active {
     -moz-transition: opacity 0.3s ease-in-out;
     -o-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
-    background: #1bdcde;
+    background: #40a250;
     background: rgba(27, 220, 222, .9);
 }
 .work .item-wrap:hover .overlay, .work .item-wrap:hover .link-icon {
@@ -346,11 +346,11 @@ nav a.active {
     height: auto;
 }
 .about .about-info h5 {
-    color: #1bdcde;
+    color: #40a250;
 }
 .about .about-info .fa {
     padding-right: 8px;
-    color:#1bdcde;
+    color:#40a250;
 }
 /*--------------------------------------- TEAM ---------------------------------------------------*/
 .team {
@@ -385,7 +385,7 @@ nav a.active {
     height:128px;
     margin:20px auto;
     display:block;
-    border:2px solid #1bdcde;
+    border:2px solid #40a250;
     border-radius:50%;
 }
 .testimonials .carousel-content h5 {
@@ -411,7 +411,7 @@ nav a.active {
     background-color:#3a3a3a;
 }
 .testimonials .carousel-indicators li.active {
-    background-color: #1bdcde;
+    background-color: #40a250;
 }
 /*--------------------------------------- CONTACT ------------------------------------------------*/
 .contact {
