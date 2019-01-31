@@ -1,4 +1,4 @@
-const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+const baseUrl = 'https://fast-meadow-36413.herokuapp.com/'
 window.onload = getFoods();
 
 function getFoods() {
@@ -25,11 +25,10 @@ function makeFoodsList(array_in) {
     var name = element.name;
     var calories = element.calories;
     $('#foods').append(`
-      <div class="card">
-      <h4>${name}</h4>
-      <span>${calories}</span>
-      <span><button class="delete-food" onclick="deleteFood(${id})" >Delete</span>
-      <span><button class="edit-food" onclick="editFood(${id})" >Edit</span>
+      <div class="col-lg-2 foodcard">
+        <p><h5>${name}</h5><small class="card-text">Calories: ${calories}</small></p>
+        <span><button class="delete-food" onclick="deleteFood(${id})" >Delete</span>
+        <span><button class="edit-food" onclick="editFood(${id})" >Edit</span>
       </div>
       `)
   });
