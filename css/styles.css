@@ -333,7 +333,7 @@ nav a.active {
 }
 /*--------------------------------------- ABOUT US -----------------------------------------------*/
 .about .about-container {
-    background: url(../images/about.png);
+    /* background: url(../images/about.png); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position:center center;

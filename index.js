@@ -1,4 +1,5 @@
-const baseUrl = 'https://fast-meadow-36413.herokuapp.com/'
+const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+window.onload = getFoods();
 
 function getFoods() {
   var request = new XMLHttpRequest();
@@ -6,7 +7,9 @@ function getFoods() {
   request.open('GET', baseUrl + uri, true);
   request.onload = function () {
     if (this.status == 200) {
-      var data = JSON.parse(this.responseText); makeFoodsList(data);
+      var data = JSON.parse(this.responseText);
+      console.log(data);
+      makeFoodsList(data);
     } else {
       alert('Something went wrong');
     }
@@ -21,12 +24,13 @@ function makeFoodsList(array_in) {
     var id = element.id;
     var name = element.name;
     var calories = element.calories;
-    // Look up how to do a jquery append function
     $('#foods').append(`
-      <td>${name}</td>
-      <td>${calories}</td>
-      <td><button class="delete-food" onclick="deleteFood(${id})" >Delete</td>
-      <td><button class="edit-food" onclick="editFood(${id})" >Edit</td>
+      <div class="card">
+      <h4>${name}</h4>
+      <span>${calories}</span>
+      <span><button class="delete-food" onclick="deleteFood(${id})" >Delete</span>
+      <span><button class="edit-food" onclick="editFood(${id})" >Edit</span>
+      </div>
       `)
   });
 }
