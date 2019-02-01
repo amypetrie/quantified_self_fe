@@ -340,7 +340,7 @@ nav a.active {
     min-height: 600px;
 }
 .about .about-info {
-    padding: 50px 16px;
+    /* padding: 10px 10px; */
     background-color: #ffffff;
     color: #5e5e5e;
     height: auto;
@@ -349,7 +349,7 @@ nav a.active {
     color: #40a250;
 }
 .about .about-info .fa {
-    padding-right: 8px;
+    /* padding-right: 8px; */
     color:#40a250;
 }
 /*--------------------------------------- TEAM ---------------------------------------------------*/
@@ -470,7 +470,7 @@ nav a.active {
         text-transform:uppercase;
     }
     .about .about-info {
-        padding:64px;
+        padding: 5px 45px 45px 45px;
     }
     .testimonials #carousel-testimonials {
         background-attachment: fixed;
