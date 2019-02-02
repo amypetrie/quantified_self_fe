@@ -1,5 +1,5 @@
-const baseUrl = 'https://fast-meadow-36413.herokuapp.com/'
-window.onload = getFoods();
+const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+window.onload = allClear('foods', getFoods);
 
 function getFoods() {
   var request = new XMLHttpRequest();
@@ -8,7 +8,6 @@ function getFoods() {
   request.onload = function () {
     if (this.status == 200) {
       var data = JSON.parse(this.responseText);
-      console.log(data);
       makeFoodsList(data);
     } else {
       alert('Something went wrong');
@@ -19,14 +18,16 @@ function getFoods() {
 
 function deleteFood(id_in) {
   var request = new XMLHttpRequest();
-  var uri = `api/v1/foods${id_in}`
-  request.open('GET', baseUrl + uri, true);
+  var uri = `api/v1/foods/${id_in}`
+  console.log(baseUrl + uri);
+  request.open('DELETE', baseUrl + uri, true);
   request.onload = function () {
     if (this.status == 204) {
-      var data = JSON.parse(this.responseText);
-      console.log(data);
       alert(`Food ${id_in} deleted!`);
+      allClear('foods', getFoods);
+      var data = JSON.parse(this.responseText);
     } else {
+      console.log(this.status);
       alert('Something went wrong');
     }
   }
@@ -34,7 +35,6 @@ function deleteFood(id_in) {
 }
 
 function makeFoodsList(array_in) {
-  console.log(array_in)
   var count = 0;
   array_in.forEach(function(element) {
     var id = element.id;
@@ -58,14 +58,11 @@ function createButtons(food_id) {
   document.body.appendChild(button);
 }
 
-function deleteFood(food_id) {
-  console.log(`${food_id} will be deleted`)
-}
-
 function editFood(food_id) {
   console.log(`${food_id} will be edited`)
 }
 
-function aClear(){
-  document.getElementById('newLocation').value = '';
+function allClear(div_id, callback){
+  document.getElementById(div_id).innerHTML = '';
+  callback();
 }

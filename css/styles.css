@@ -337,7 +337,7 @@ nav a.active {
     background-size: cover;
     background-repeat: no-repeat;
     background-position:center center;
-    min-height: 600px;
+    min-height: 720px;
 }
 .about .about-info {
     /* padding: 10px 10px; */
