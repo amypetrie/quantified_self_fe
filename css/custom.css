@@ -22,3 +22,11 @@
 .about hr {
   height: 0px;
 }
+
+.food {
+    min-height: 720px;
+}
+
+.about {
+    min-height: 720px;
+}
