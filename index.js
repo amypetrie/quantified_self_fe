@@ -17,6 +17,22 @@ function getFoods() {
   request.send();
 }
 
+function deleteFood(id_in) {
+  var request = new XMLHttpRequest();
+  var uri = `api/v1/foods${id_in}`
+  request.open('GET', baseUrl + uri, true);
+  request.onload = function () {
+    if (this.status == 204) {
+      var data = JSON.parse(this.responseText);
+      console.log(data);
+      alert(`Food ${id_in} deleted!`);
+    } else {
+      alert('Something went wrong');
+    }
+  }
+  request.send();
+}
+
 function makeFoodsList(array_in) {
   console.log(array_in)
   var count = 0;
