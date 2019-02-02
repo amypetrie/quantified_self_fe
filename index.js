@@ -44,22 +44,19 @@ function makeFoodsList(array_in) {
       <div class="col-lg-2 foodcard">
         <p><h5>${name}</h5><small class="card-text">Calories: ${calories}</small></p>
         <span><button class="delete-food" onclick="deleteFood(${id})" >Delete</span>
-        <span><button class="edit-food" onclick="editFood(${id})" >Edit</span>
+        <span><button class="edit-food"  data-toggle="modal" data-target="#modal1" onclick="populateFood(${id})">Edit</span>
       </div>
       `)
   });
 }
 
-function createButtons(food_id) {
-  var button = document.createElement("td");
-  button.type = "button";
-  button.value = "Delete";
-  button.onclick = deleteFood(food_id);
-  document.body.appendChild(button);
+function populateFood(id){
+  console.log(`${id}`);
 }
 
-function editFood(food_id) {
-  console.log(`${food_id} will be edited`)
+function saveFood(){
+  // food_id = div.food_id.value
+  console.log("hi");
 }
 
 function allClear(div_id, callback){
