@@ -63,25 +63,22 @@ function saveFood() {
   var cals = document.getElementById("editFoodCals").value;
   var currentId = document.getElementById("editFoodId").innerHTML;
   var requestUrl = `${baseUrl}` + `api/v1/foods/${currentId}`;
-
   var data = {};
   data.name = `${name}`;
   data.calories = `${cals}`;
   var json = JSON.stringify(data);
-
   var xhr = new XMLHttpRequest();
   xhr.open("PUT", requestUrl, true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
 	   if (xhr.readyState == 4 && xhr.status == "202") {
-       hideModals();
        window.allClear('foods', getFoods);
-       alert(`${name} edited`);
+       hideModals();
 	   } else {
        hideModals();
-       alert(`${name} editing failed`);
+       console.log(`${name} editing failed`);
 	   }
-    }
+  }
   xhr.send(json);
 }
 
@@ -92,9 +89,4 @@ function allClear(div_id, callback) {
 
 function hideModals() {
   $('.modal').modal('hide');
-}
-
-async function waitAlert(msg, callback) {
-  await callback;
-  alert(`${msg}`);
 }

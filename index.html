@@ -236,9 +236,20 @@
             </button>
           </div>
           <div class="modal-body">
-            <div id="editFoodId"></div>
-            <input type="text" id="editFoodName" class="edit">
-            <input type="number" id="editFoodCals" class="edit">
+            <div class="row">
+              <div class="col-md-4">
+                <input type="text" id="editFoodName" class="edit"></br>
+                Food Name</br><br>
+                Food Id: <span id="editFoodId"></span>
+              </div>
+              <div class="col-md-4">
+                <input type="number" id="editFoodCals" class="edit"></br>
+                Calories</br><br>
+                <span id="foodEdited"></span>
+              </div>
+              <div class="col-md-4">
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn" data-dismiss="modal">Close</button>
