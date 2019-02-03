@@ -1,5 +1,4 @@
 const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
-// const baseUrl = 'http://localhost:8080/'
 window.onload = allClear('foods', getFoods);
 
 function getFoods() {
@@ -51,7 +50,7 @@ function makeFoodsList(array_in) {
   });
 }
 
-function populateFood(food_id){
+function populateFood(food_id) {
   var foodName = document.getElementById(`foodName-${food_id}`).innerHTML
   var foodCals = document.getElementById(`foodCals-${food_id}`).innerHTML
   document.getElementById("editFoodName").value = foodName;
@@ -59,7 +58,7 @@ function populateFood(food_id){
   document.getElementById("editFoodId").innerHTML = food_id;
 }
 
-function saveFood(){
+function saveFood() {
   var name = document.getElementById("editFoodName").value;
   var cals = document.getElementById("editFoodCals").value;
   var currentId = document.getElementById("editFoodId").innerHTML;
@@ -74,39 +73,28 @@ function saveFood(){
   xhr.open("PUT", requestUrl, true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
-    // 	var users = JSON.parse(xhr.responseText);
 	   if (xhr.readyState == 4 && xhr.status == "202") {
-		    console.log("Updated");
+       hideModals();
+       window.allClear('foods', getFoods);
+       alert(`${name} edited`);
 	   } else {
-		    console.error("error");
+       hideModals();
+       alert(`${name} editing failed`);
 	   }
     }
   xhr.send(json);
 }
 
-// function saveFood(){
-//     var name = document.getElementById("editFoodName").value;
-//     var cals = document.getElementById("editFoodCals").value;
-//     var currentId = document.getElementById("editFoodId").innerHTML;
-//     var requestUrl = `${baseUrl}` + `api/v1/foods/${currentId}`;
-//     console.log(requestUrl);
-//     const requestResponse = $.ajax(
-//                                   {url: `${requestUrl}`,
-//                                   type: 'PUT',
-//                                   contentType: 'application/json',
-//                                   headers: {origin: "some value"},
-//                                   data: {name: `${name}`, calories: `${cals}`},
-//                                   dataType: 'json',
-//                                   success: function(res){
-//                                     console.log("Success!");
-//                                   },
-//                                   error: function(res){
-//                                     console.log("Error!");
-//                                   }
-//                                 });
-// }
-
-function allClear(div_id, callback){
+function allClear(div_id, callback) {
   document.getElementById(div_id).innerHTML = '';
   callback();
+}
+
+function hideModals() {
+  $('.modal').modal('hide');
+}
+
+async function waitAlert(msg, callback) {
+  await callback;
+  alert(`${msg}`);
 }
