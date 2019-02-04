@@ -82,7 +82,7 @@
           </div>
           <div class="col-sm-4 text-center">
             <br>
-            <span class="text-center"><button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" onclick="" >Add New Food</button></span>
+            <span class="text-center"><button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" id="newFoodButton" data-toggle="modal" data-target="#modal2">Add New Food</button></span>
           </div>
         </div>
         <div class="row food-boxes" id="foods">
@@ -263,18 +263,29 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Project 2</h4>
+            <h4 class="modal-title">Add New Food</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <img src="images/work2.png" alt="work2"/>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellu.</p>
+            <div class="row">
+              <div class="col-md-4">
+                <input type="text" id="newFoodName" class="new"></br>
+                Food Name</br>
+              </div>
+              <div class="col-md-4">
+                <input type="number" id="newFoodCals" class="new"></br>
+                Calories</br><br>
+                <span id="foodCreated"></span>
+              </div>
+              <div class="col-md-4">
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn" data-dismiss="modal">Close</button>
-            <a class="btn" href="#">Live Site</a>
+            <a class="btn" onclick="addNewFood()">Add Food</a>
           </div>
         </div>
       </div>

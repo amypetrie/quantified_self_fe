@@ -16,6 +16,29 @@ function getFoods() {
   request.send();
 }
 
+function addNewFood(){
+  var newName = document.getElementById("newFoodName").value;
+  var newCals = document.getElementById("newFoodCals").value;
+  var requestUrl = `${baseUrl}` + `api/v1/foods`;
+  var data = {};
+  data.name = `${newName}`;
+  data.calories = `${newCals}`;
+  var json = JSON.stringify(data);
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", requestUrl, true);
+  xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+  xhr.onload = function () {
+     if (xhr.readyState == 4 && xhr.status == "201") {
+       window.allClear('foods', getFoods);
+       hideModals();
+     } else {
+       hideModals();
+       console.log(`Add failed`);
+     }
+  }
+  xhr.send(json);
+}
+
 function deleteFood(id_in) {
   var request = new XMLHttpRequest();
   var uri = `api/v1/foods/${id_in}`
