@@ -1,4 +1,5 @@
 const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+var newFoodButton = document.getElementById("newFoodButton")
 window.onload = allClear('foods', getFoods);
 
 function getFoods() {
@@ -90,3 +91,8 @@ function allClear(div_id, callback) {
 function hideModals() {
   $('.modal').modal('hide');
 }
+
+newFoodButton.addEventListener("click", function( event ){
+  event.preventDefault();
+  // addNewFood();
+})
