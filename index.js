@@ -1,5 +1,6 @@
 // const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
 const baseUrl = 'https://fast-meadow-36413.herokuapp.com/'
+var allFoods = null;
 window.onload = allClear('foods', getFoods);
 window.onload = getDailyMeals();
 
@@ -26,6 +27,7 @@ function populateDailyMeals(meals_data, callback){
 }
 
 function populateSingleMeal(meal_data, meal_type){
+  let meal_id = meal_data.id;
   let meal_foods = meal_data.foods;
   let meal_div = getMealDiv(meal_type);
   let meal_cals = calculateMealCals(meal_foods);
@@ -34,6 +36,23 @@ function populateSingleMeal(meal_data, meal_type){
     let list_item = document.createElement("li");
     list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
     document.getElementById(`${meal_div}Foods`).appendChild(list_item);
+  });
+  $(`#${meal_div}-buttons`).append(`
+    <hr>
+    <button type="button" class="btn btn-primary btn-sm" role="button" onClick="createAllChoices()" id="${meal_div}-${meal_id}-NewFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
+    <hr>
+    <button type="button" class="btn btn-primary btn-sm" role="button" onClick="removeFood(${meal_id})" id="${meal_div}-${meal_id}-RemoveFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+  `);
+}
+
+function createAllChoices(){
+  allFoods.forEach(function(food_item) {
+    var specific_food = document.createElement("li");
+    specific_food.append(`${food_item.name} `);
+    var choiceSelection = document.createElement("input");
+    choiceSelection.setAttribute("type", "checkbox");
+    specific_food.append(choiceSelection)
+    document.getElementById('availableFoods').appendChild(specific_food);
   });
 }
 
@@ -79,8 +98,9 @@ function getFoods() {
   request.open('GET', baseUrl + uri, true);
   request.onload = function () {
     if (this.status == 200) {
-      var data = JSON.parse(this.responseText);
-      makeFoodsList(data);
+      var foods_returned = JSON.parse(this.responseText);
+      allFoods = foods_returned;
+      makeFoodsList(allFoods);
     } else {
       alert('Something went wrong');
     }
@@ -130,6 +150,7 @@ function deleteFood(id_in) {
 }
 
 function makeFoodsList(array_in) {
+  console.log(array_in);
   var count = 0;
   array_in.forEach(function(element) {
     var id = element.id;
