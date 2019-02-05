@@ -1,5 +1,7 @@
-const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+// const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+const baseUrl = 'https://fast-meadow-36413.herokuapp.com/'
 window.onload = allClear('foods', getFoods);
+window.onload = getDailyMeals();
 
 function getFoods() {
   var request = new XMLHttpRequest();
@@ -14,6 +16,31 @@ function getFoods() {
     }
   }
   request.send();
+}
+
+function getDailyMeals(date) {
+  var request = new XMLHttpRequest();
+  var uri = 'api/v1/meals' // need to append url for a new endpoint - "current"
+  request.open('GET', baseUrl + uri, true);
+  request.onload = function () {
+    if (this.status == 200) {
+      var data = JSON.parse(this.responseText);
+      populateDailyMeals(data);
+    } else {
+      alert('Something went wrong');
+    }
+  }
+  request.send();
+}
+
+function populateDailyMeals(meal_data){
+  meal_data.forEach(function(meal){
+    populateSingleMeal(`${meal.name}`);
+  })
+}
+
+function populateSingleMeal(meal_type){
+  console.log(meal_type);
 }
 
 function addNewFood(){
