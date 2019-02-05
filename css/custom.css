@@ -30,3 +30,9 @@
 .about {
     min-height: 720px;
 }
+
+.row ul{
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
+}

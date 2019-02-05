@@ -1,5 +1,50 @@
-const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+// const baseUrl = 'https://murmuring-bastion-46368.herokuapp.com/'
+const baseUrl = 'https://fast-meadow-36413.herokuapp.com/'
 window.onload = allClear('foods', getFoods);
+window.onload = getDailyMeals();
+
+function getDailyMeals(date) {
+  var request = new XMLHttpRequest();
+  var uri = 'api/v1/meals' // need to append url for a new endpoint - "current"
+  request.open('GET', baseUrl + uri, true);
+  request.onload = function () {
+    if (this.status == 200) {
+      var data = JSON.parse(this.responseText);
+      populateDailyMeals(data);
+    } else {
+      alert('Something went wrong');
+    }
+  }
+  request.send();
+}
+
+function populateDailyMeals(meals_data){
+  meals_data.forEach(function(meal){
+    populateSingleMeal(meal, `${meal.name}`);
+  })
+}
+
+function populateSingleMeal(meal_data, meal_type){
+  let meal_div = getMealDiv(meal_type);
+  let meal_foods = meal_data.foods;
+  meal_foods.forEach(function(food){
+    let list_item = document.createElement("li");
+    list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
+    document.getElementById(`${meal_div}Foods`).appendChild(list_item);
+  });
+}
+
+function getMealDiv(identifier){
+  if (identifier == 1 || identifier == "Breakfast"){
+    return "breakfast";
+  } else if (identifier == 2 || identifier == "Lunch"){
+    return "lunch";
+  } else if (identifier == 3 || identifier == "Snack"){
+    return "snack";
+  } else if (identifier == 4 || identifier == "Dinner"){
+    return "dinner";
+  }
+}
 
 function getFoods() {
   var request = new XMLHttpRequest();
