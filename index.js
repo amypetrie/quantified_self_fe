@@ -33,14 +33,19 @@ function getDailyMeals(date) {
   request.send();
 }
 
-function populateDailyMeals(meal_data){
-  meal_data.forEach(function(meal){
-    populateSingleMeal(`${meal.name}`);
+function populateDailyMeals(meals_data){
+  meals_data.forEach(function(meal){
+    populateSingleMeal(meal, `${meal.name}`);
   })
 }
 
-function populateSingleMeal(meal_type){
-  console.log(meal_type);
+function populateSingleMeal(meal_data, meal_type){
+  let meal_foods = meal_data.foods;
+  meal_foods.forEach(function(food){
+    let list_item = document.createElement("li");
+    list_item.innerHTML = (`${food.name}, ${food.calories} calories`);
+    document.getElementById("breakfastFoods").appendChild(list_item);
+  });
 }
 
 function addNewFood(){
