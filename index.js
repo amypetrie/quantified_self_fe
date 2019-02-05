@@ -25,13 +25,28 @@ function populateDailyMeals(meals_data){
 }
 
 function populateSingleMeal(meal_data, meal_type){
-  let meal_div = getMealDiv(meal_type);
   let meal_foods = meal_data.foods;
+  let meal_div = getMealDiv(meal_type);
+  let meal_cals = calculateMealCals(meal_foods);
+  document.getElementById(`${meal_div}Cals`).innerHTML = `${meal_cals}`;
   meal_foods.forEach(function(food){
     let list_item = document.createElement("li");
     list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
     document.getElementById(`${meal_div}Foods`).appendChild(list_item);
   });
+}
+
+function populateMealCals(foods){
+  let total = calculateMealCals(foods);
+
+}
+
+function calculateMealCals(foods){
+  let total = 0;
+  foods.forEach(function(food){
+    total += food.calories
+  })
+  return total;
 }
 
 function getMealDiv(identifier){
