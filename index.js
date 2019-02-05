@@ -10,7 +10,7 @@ function getDailyMeals(date) {
   request.onload = function () {
     if (this.status == 200) {
       var data = JSON.parse(this.responseText);
-      populateDailyMeals(data);
+      populateDailyMeals(data, calculateTotalCals);
     } else {
       alert('Something went wrong');
     }
@@ -18,20 +18,47 @@ function getDailyMeals(date) {
   request.send();
 }
 
-function populateDailyMeals(meals_data){
+function populateDailyMeals(meals_data, callback){
   meals_data.forEach(function(meal){
     populateSingleMeal(meal, `${meal.name}`);
-  })
+  });
+  callback(meals_data, calculateRemainingCals);
 }
 
 function populateSingleMeal(meal_data, meal_type){
-  let meal_div = getMealDiv(meal_type);
   let meal_foods = meal_data.foods;
+  let meal_div = getMealDiv(meal_type);
+  let meal_cals = calculateMealCals(meal_foods);
+  document.getElementById(`${meal_div}Cals`).innerHTML = `${meal_cals}`;
   meal_foods.forEach(function(food){
     let list_item = document.createElement("li");
     list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
     document.getElementById(`${meal_div}Foods`).appendChild(list_item);
   });
+}
+
+function calculateRemainingCals(){
+  let total = document.getElementById(`calsTotal`).innerHTML;
+  let result = 2000 - parseInt(`${total}`);
+  document.getElementById(`calsRemaining`).innerHTML = `${result}`;
+}
+
+function calculateTotalCals(daily_meals_data, callback){
+  let a = document.getElementById(`breakfastCals`).innerHTML;
+  let b = document.getElementById(`lunchCals`).innerHTML;
+  let c = document.getElementById(`dinnerCals`).innerHTML;
+  let d = document.getElementById(`snackCals`).innerHTML;
+  let result = parseInt(`${a}`) + parseInt(`${b}`) + parseInt(`${c}`) + parseInt(`${d}`);
+  document.getElementById(`calsTotal`).innerHTML = `${result}`;
+  callback();
+}
+
+function calculateMealCals(foods){
+  let total = 0;
+  foods.forEach(function(food){
+    total += food.calories
+  })
+  return total;
 }
 
 function getMealDiv(identifier){
