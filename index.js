@@ -10,7 +10,7 @@ function getDailyMeals(date) {
   request.onload = function () {
     if (this.status == 200) {
       var data = JSON.parse(this.responseText);
-      populateDailyMeals(data);
+      populateDailyMeals(data, calculateTotalCals);
     } else {
       alert('Something went wrong');
     }
@@ -18,10 +18,11 @@ function getDailyMeals(date) {
   request.send();
 }
 
-function populateDailyMeals(meals_data){
+function populateDailyMeals(meals_data, callback){
   meals_data.forEach(function(meal){
     populateSingleMeal(meal, `${meal.name}`);
-  })
+  });
+  callback(meals_data, calculateRemainingCals);
 }
 
 function populateSingleMeal(meal_data, meal_type){
@@ -36,9 +37,20 @@ function populateSingleMeal(meal_data, meal_type){
   });
 }
 
-function populateMealCals(foods){
-  let total = calculateMealCals(foods);
+function calculateRemainingCals(){
+  let total = document.getElementById(`calsTotal`).innerHTML;
+  let result = 2000 - parseInt(`${total}`);
+  document.getElementById(`calsRemaining`).innerHTML = `${result}`;
+}
 
+function calculateTotalCals(daily_meals_data, callback){
+  let a = document.getElementById(`breakfastCals`).innerHTML;
+  let b = document.getElementById(`lunchCals`).innerHTML;
+  let c = document.getElementById(`dinnerCals`).innerHTML;
+  let d = document.getElementById(`snackCals`).innerHTML;
+  let result = parseInt(`${a}`) + parseInt(`${b}`) + parseInt(`${c}`) + parseInt(`${d}`);
+  document.getElementById(`calsTotal`).innerHTML = `${result}`;
+  callback();
 }
 
 function calculateMealCals(foods){
