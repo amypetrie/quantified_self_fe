@@ -40,7 +40,10 @@ function populateSingleMeal(meal_data, meal_type){
   document.getElementById(`${meal_string}Cals`).innerHTML = `${meal_cals}`;
   meal_foods.forEach(function(food){
     let list_item = document.createElement("li");
-    list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
+    let specific_food_id = document.createElement("p");
+    specific_food_id.innerHTML = `${food.id}`;
+    list_item.innerHTML = (`${food.name}, ${food.calories} calories ID:`);
+    list_item.append(specific_food_id.innerHTML);
     document.getElementById(`${meal_string}Foods`).appendChild(list_item);
   });
   $(`#${meal_string}-buttons`).append(`
@@ -53,15 +56,25 @@ function populateSingleMeal(meal_data, meal_type){
 
 function createExistingChoices(meal_id){
   var meal_type = getMealDivName(meal_id);
-  var curr = document.getElementById(`${meal_type}Foods`);
-  document.getElementById('currentFoods').append(curr);
+  var curr = document.getElementById(`${meal_type}Foods`).children;
+  for (i = 0; i < curr.length; i++) {
+    var specific_food = document.createElement("li");
+    var specific_food_id = document.createElement("p");
+    specific_food.append(curr[i].innerHTML);
+    // specific_food_id.append(`${food_item.id}`);
+    var existingSelection = document.createElement("input");
+    existingSelection.setAttribute("type", "checkbox");
+    specific_food.append(existingSelection);
+
+    document.getElementById('currentFoods').appendChild(specific_food);
+  }
 }
 
 function createAllChoices(meal_id){
   allFoods.forEach(function(food_item) {
     var specific_food = document.createElement("li");
     var specific_food_id = document.createElement("p");
-    specific_food.append(`${food_item.name}`);
+    specific_food.append(`${food_item.name}, ${food_item.calories} calories `);
     specific_food_id.append(`${food_item.id}`);
     var choiceSelection = document.createElement("input");
     choiceSelection.setAttribute("type", "checkbox");
