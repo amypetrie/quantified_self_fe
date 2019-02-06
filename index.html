@@ -128,10 +128,7 @@
                 <i class="fa fa-cutlery fa-2x"></i>
                 <h6 id="lunchCals"></h6>
                 <sm>Meal Calories Total</sm>
-                <hr>
-                <button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" id="lunch-NewFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
-                <hr>
-                <button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" id="lunch-RemoveFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+                <div id="lunch-buttons"></div>
               </div>
               <div class="row">
                 <hr>
@@ -146,10 +143,7 @@
                 <i class="fa fa-cutlery fa-2x"></i>
                 <h6 id="snackCals"></h6>
                 <sm>Meal Calories Total</sm>
-                <hr>
-                <button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" id="snack-NewFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
-                <hr>
-                <button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" id="snack-RemoveFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+                <div id="snack-buttons"></div>
               </div>
               <div class="row">
                 <hr>
@@ -164,10 +158,7 @@
                 <i class="fa fa-cutlery fa-2x"></i>
                 <h6 id="dinnerCals"></h6>
                 <sm>Meal Calories Total</sm>
-                <hr>
-                <button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" id="dinner-NewFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
-                <hr>
-                <button type="button" class="btn btn-primary btn-sm" role="button" title="Add a food to the database" id="dinner-RemoveFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+                <div id="dinner-buttons"></div>
               </div>
               <div class="row">
                 <hr>
@@ -270,7 +261,8 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Add Food to Meal</h4>
+            <h4 class="modal-title">Add Food to Meal </h4>
+            <p id="mealIdentifier"></p>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -280,7 +272,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn" data-dismiss="modal">Close</button>
-            <a class="btn" href="#">Live Site</a>
+            <a class="btn" onClick="updateMeal()">Update Meal</a>
           </div>
         </div>
       </div>

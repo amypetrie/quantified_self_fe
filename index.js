@@ -4,9 +4,9 @@ var allFoods = null;
 window.onload = allClear('foods', getFoods);
 window.onload = getDailyMeals();
 
-function getDailyMeals(date) {
+function getDailyMeals() {
   var request = new XMLHttpRequest();
-  var uri = 'api/v1/meals' // need to append url for a new endpoint - "current"
+  var uri = 'api/v1/meals'
   request.open('GET', baseUrl + uri, true);
   request.onload = function () {
     if (this.status == 200) {
@@ -39,21 +39,64 @@ function populateSingleMeal(meal_data, meal_type){
   });
   $(`#${meal_div}-buttons`).append(`
     <hr>
-    <button type="button" class="btn btn-primary btn-sm" role="button" onClick="createAllChoices()" id="${meal_div}-${meal_id}-NewFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
+    <button type="button" class="btn btn-primary btn-sm" role="button" onClick="createAllChoices(${meal_id})" id="${meal_div}-${meal_id}-NewFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
     <hr>
     <button type="button" class="btn btn-primary btn-sm" role="button" onClick="removeFood(${meal_id})" id="${meal_div}-${meal_id}-RemoveFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
   `);
 }
 
-function createAllChoices(){
+function createAllChoices(meal_id){
   allFoods.forEach(function(food_item) {
     var specific_food = document.createElement("li");
-    specific_food.append(`${food_item.name} `);
+    var specific_food_id = document.createElement("p");
+    specific_food.append(`${food_item.name}`);
+    specific_food_id.append(`${food_item.id}`);
     var choiceSelection = document.createElement("input");
     choiceSelection.setAttribute("type", "checkbox");
-    specific_food.append(choiceSelection)
+    specific_food.append(choiceSelection);
+    specific_food.append(specific_food_id);
+
     document.getElementById('availableFoods').appendChild(specific_food);
+    document.getElementById('mealIdentifier').innerHTML = `${meal_id}`;
   });
+}
+
+function updateMeal(){
+  var requestUrl = `${baseUrl}` + `api/v1/foods`;
+  var avail_foods = document.getElementById("availableFoods");
+  var meal_id = document.getElementById("mealIdentifier").innerHTML;
+  var checkmarks = avail_foods.getElementsByTagName("input");
+  var list_items = avail_foods.getElementsByTagName("li");
+  var data = {};
+
+  for (var i = 0, len = list_items.length; i < len; i++ ) {
+    if (checkmarks[ i ].checked){
+      var food_id = list_items[i].getElementsByTagName("p")[0].innerHTML;
+      postFoodtoMeal(food_id, meal_id);
+      hideModals();
+    };
+  }
+}
+
+function postFoodtoMeal(food_id, meal_id){
+  var uri = `https://fast-meadow-36413.herokuapp.com/api/v1/meals/${meal_id}/foods/${food_id}`;
+  var data = {};
+  data.meal_id = meal_id;
+  data.food_id = food_id;
+  var json = JSON.stringify(data);
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", uri, true);
+  xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+  xhr.onload = function () {
+     if (xhr.readyState == 4 && xhr.status == "201") {
+       console.log("cool");
+       allClear('breakfast', getDailyMeals);
+     } else {
+       console.log(`Something went wrong`);
+       hideModals();
+     }
+  }
+  xhr.send(json);
 }
 
 function calculateRemainingCals(){
