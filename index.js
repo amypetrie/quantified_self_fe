@@ -25,7 +25,8 @@ function populateDailyMeals(meals_data, callback){
   document.getElementById('snack-buttons').innerHTML = '';
   document.getElementById('dinner-buttons').innerHTML = '';
   meals_data.forEach(function(meal){
-    populateSingleMeal(meal, `${meal.name}`);
+    var meal_string = String(meal.name);
+    populateSingleMeal(meal, meal_string);
   });
   callback(meals_data, calculateRemainingCals);
 }
@@ -33,28 +34,27 @@ function populateDailyMeals(meals_data, callback){
 function populateSingleMeal(meal_data, meal_type){
   var meal_id = meal_data.id;
   var meal_foods = meal_data.foods;
-  var meal_div_name = getMealDivName(meal_type);
+  var meal_string = getMealDivName(meal_type);
+  var meal_identifier = getMealType(meal_string);
   var meal_cals = calculateMealCals(meal_foods);
-  document.getElementById(`${meal_div_name}Cals`).innerHTML = `${meal_cals}`;
+  document.getElementById(`${meal_string}Cals`).innerHTML = `${meal_cals}`;
   meal_foods.forEach(function(food){
     let list_item = document.createElement("li");
     list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
-    document.getElementById(`${meal_div_name}Foods`).appendChild(list_item);
+    document.getElementById(`${meal_string}Foods`).appendChild(list_item);
   });
-  $(`#${meal_div_name}-buttons`).append(`
+  $(`#${meal_string}-buttons`).append(`
     <hr>
     <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createAllChoices(${meal_id})" id="newFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
     <hr>
-    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createExistingChoices(${meal_div_name})" id="removeFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createExistingChoices(${meal_identifier})" id="removeFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
   `);
 }
 
-function createExistingChoices(meal_type){
-  // console.log(meal_type);
-  // var curr = document.getElementById("breakfastFoods");
-//   var curr_foods = meal_type.getElementsByTagName("li");
-//   console.log(curr_foods);
-//   document.getElementById('currentFoods').append(curr_foods);
+function createExistingChoices(meal_id){
+  var meal_type = getMealDivName(meal_id);
+  var curr = document.getElementById(`${meal_type}Foods`);
+  document.getElementById('currentFoods').append(curr);
 }
 
 function createAllChoices(meal_id){
@@ -145,6 +145,18 @@ function getMealDivName(identifier){
     return "snack";
   } else if (identifier == 4 || identifier == "Dinner"){
     return "dinner";
+  }
+}
+
+function getMealType(identifier){
+  if (identifier == "breakfast" || identifier == "Breakfast"){
+    return 1;
+  } else if (identifier == "lunch" || identifier == "Lunch"){
+    return 2;
+  } else if (identifier == "snack" || identifier == "Snack"){
+    return 3;
+  } else if (identifier == "dinner" || identifier == "Dinner"){
+    return 4;
   }
 }
 
