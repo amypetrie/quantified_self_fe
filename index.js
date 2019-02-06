@@ -20,6 +20,10 @@ function getDailyMeals() {
 }
 
 function populateDailyMeals(meals_data, callback){
+  document.getElementById('breakfast-buttons').innerHTML = '';
+  document.getElementById('lunch-buttons').innerHTML = '';
+  document.getElementById('snack-buttons').innerHTML = '';
+  document.getElementById('dinner-buttons').innerHTML = '';
   meals_data.forEach(function(meal){
     populateSingleMeal(meal, `${meal.name}`);
   });
@@ -27,10 +31,10 @@ function populateDailyMeals(meals_data, callback){
 }
 
 function populateSingleMeal(meal_data, meal_type){
-  let meal_id = meal_data.id;
-  let meal_foods = meal_data.foods;
-  let meal_div = getMealDiv(meal_type);
-  let meal_cals = calculateMealCals(meal_foods);
+  var meal_id = meal_data.id;
+  var meal_foods = meal_data.foods;
+  var meal_div = getMealDiv(meal_type);
+  var meal_cals = calculateMealCals(meal_foods);
   document.getElementById(`${meal_div}Cals`).innerHTML = `${meal_cals}`;
   meal_foods.forEach(function(food){
     let list_item = document.createElement("li");
@@ -39,9 +43,9 @@ function populateSingleMeal(meal_data, meal_type){
   });
   $(`#${meal_div}-buttons`).append(`
     <hr>
-    <button type="button" class="btn btn-primary btn-sm" role="button" onClick="createAllChoices(${meal_id})" id="${meal_div}-${meal_id}-NewFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
+    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createAllChoices(${meal_id})" id="newFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
     <hr>
-    <button type="button" class="btn btn-primary btn-sm" role="button" onClick="removeFood(${meal_id})" id="${meal_div}-${meal_id}-RemoveFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="removeFood(${meal_id})" id="removeFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
   `);
 }
 
@@ -90,7 +94,8 @@ function postFoodtoMeal(food_id, meal_id){
   xhr.onload = function () {
      if (xhr.readyState == 4 && xhr.status == "201") {
        console.log("cool");
-       allClear('breakfast', getDailyMeals);
+       document.getElementById("")
+       getDailyMeals();
      } else {
        console.log(`Something went wrong`);
        hideModals();
@@ -116,7 +121,7 @@ function calculateTotalCals(daily_meals_data, callback){
 }
 
 function calculateMealCals(foods){
-  let total = 0;
+  var total = 0;
   foods.forEach(function(food){
     total += food.calories
   })
@@ -155,15 +160,17 @@ function addNewFood(){
   var newName = document.getElementById("newFoodName").value;
   var newCals = document.getElementById("newFoodCals").value;
   var requestUrl = `${baseUrl}` + `api/v1/foods`;
+  var top_data = {};
   var data = {};
   data.name = `${newName}`;
   data.calories = `${newCals}`;
-  var json = JSON.stringify(data);
+  top_data.food = data;
+  var json = JSON.stringify(top_data);
   var xhr = new XMLHttpRequest();
   xhr.open("POST", requestUrl, true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
-     if (xhr.readyState == 4 && xhr.status == "201") {
+     if (xhr.readyState == 4 && xhr.status == "200") {
        window.allClear('foods', getFoods);
        hideModals();
      } else {
@@ -176,16 +183,13 @@ function addNewFood(){
 
 function deleteFood(id_in) {
   var request = new XMLHttpRequest();
-  var uri = `api/v1/foods/${id_in}`
-  console.log(baseUrl + uri);
+  var uri = `api/v1/foods/${id_in}`;
   request.open('DELETE', baseUrl + uri, true);
   request.onload = function () {
     if (this.status == 204) {
       alert(`Food ${id_in} deleted!`);
       allClear('foods', getFoods);
-      var data = JSON.parse(this.responseText);
     } else {
-      console.log(this.status);
       alert('Something went wrong');
     }
   }
@@ -222,15 +226,17 @@ function saveFood() {
   var cals = document.getElementById("editFoodCals").value;
   var currentId = document.getElementById("editFoodId").innerHTML;
   var requestUrl = `${baseUrl}` + `api/v1/foods/${currentId}`;
+  var top_data = {}
   var data = {};
   data.name = `${name}`;
   data.calories = `${cals}`;
-  var json = JSON.stringify(data);
+  top_data.food = data;
+  var json = JSON.stringify(top_data);
   var xhr = new XMLHttpRequest();
-  xhr.open("PUT", requestUrl, true);
+  xhr.open("PATCH", requestUrl, true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
-	   if (xhr.readyState == 4 && xhr.status == "202") {
+	   if (xhr.readyState == 4 && xhr.status == "201") {
        window.allClear('foods', getFoods);
        hideModals();
 	   } else {
