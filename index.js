@@ -33,20 +33,28 @@ function populateDailyMeals(meals_data, callback){
 function populateSingleMeal(meal_data, meal_type){
   var meal_id = meal_data.id;
   var meal_foods = meal_data.foods;
-  var meal_div = getMealDiv(meal_type);
+  var meal_div_name = getMealDivName(meal_type);
   var meal_cals = calculateMealCals(meal_foods);
-  document.getElementById(`${meal_div}Cals`).innerHTML = `${meal_cals}`;
+  document.getElementById(`${meal_div_name}Cals`).innerHTML = `${meal_cals}`;
   meal_foods.forEach(function(food){
     let list_item = document.createElement("li");
     list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
-    document.getElementById(`${meal_div}Foods`).appendChild(list_item);
+    document.getElementById(`${meal_div_name}Foods`).appendChild(list_item);
   });
-  $(`#${meal_div}-buttons`).append(`
+  $(`#${meal_div_name}-buttons`).append(`
     <hr>
     <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createAllChoices(${meal_id})" id="newFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
     <hr>
-    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="removeFood(${meal_id})" id="removeFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createExistingChoices(${meal_div_name})" id="removeFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
   `);
+}
+
+function createExistingChoices(meal_type){
+  // console.log(meal_type);
+  // var curr = document.getElementById("breakfastFoods");
+//   var curr_foods = meal_type.getElementsByTagName("li");
+//   console.log(curr_foods);
+//   document.getElementById('currentFoods').append(curr_foods);
 }
 
 function createAllChoices(meal_id){
@@ -93,7 +101,7 @@ function postFoodtoMeal(food_id, meal_id){
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
      if (xhr.readyState == 4 && xhr.status == "201") {
-       console.log("cool");
+       console.log("Food added to meal");
        document.getElementById("")
        getDailyMeals();
      } else {
@@ -128,7 +136,7 @@ function calculateMealCals(foods){
   return total;
 }
 
-function getMealDiv(identifier){
+function getMealDivName(identifier){
   if (identifier == 1 || identifier == "Breakfast"){
     return "breakfast";
   } else if (identifier == 2 || identifier == "Lunch"){
@@ -197,7 +205,6 @@ function deleteFood(id_in) {
 }
 
 function makeFoodsList(array_in) {
-  console.log(array_in);
   var count = 0;
   array_in.forEach(function(element) {
     var id = element.id;
