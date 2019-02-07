@@ -25,7 +25,8 @@ function populateDailyMeals(meals_data, callback){
   document.getElementById('snack-buttons').innerHTML = '';
   document.getElementById('dinner-buttons').innerHTML = '';
   meals_data.forEach(function(meal){
-    populateSingleMeal(meal, `${meal.name}`);
+    var meal_string = String(meal.name);
+    populateSingleMeal(meal, meal_string);
   });
   callback(meals_data, calculateRemainingCals);
 }
@@ -33,27 +34,47 @@ function populateDailyMeals(meals_data, callback){
 function populateSingleMeal(meal_data, meal_type){
   var meal_id = meal_data.id;
   var meal_foods = meal_data.foods;
-  var meal_div = getMealDiv(meal_type);
+  var meal_string = getMealDivName(meal_type);
+  var meal_identifier = getMealType(meal_string);
   var meal_cals = calculateMealCals(meal_foods);
-  document.getElementById(`${meal_div}Cals`).innerHTML = `${meal_cals}`;
+  document.getElementById(`${meal_string}Cals`).innerHTML = `${meal_cals}`;
   meal_foods.forEach(function(food){
     let list_item = document.createElement("li");
-    list_item.innerHTML = (`<b>${food.name}</b> ${food.calories} calories`);
-    document.getElementById(`${meal_div}Foods`).appendChild(list_item);
+    let specific_food_id = document.createElement("p");
+    specific_food_id.innerHTML = `${food.id}`;
+    list_item.innerHTML = (`${food.name}, ${food.calories} calories ID:`);
+    list_item.append(specific_food_id.innerHTML);
+    document.getElementById(`${meal_string}Foods`).appendChild(list_item);
   });
-  $(`#${meal_div}-buttons`).append(`
+  $(`#${meal_string}-buttons`).append(`
     <hr>
     <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createAllChoices(${meal_id})" id="newFoodButton" data-toggle="modal" data-target="#modal3">Add Food</button></span>
     <hr>
-    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="removeFood(${meal_id})" id="removeFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
+    <button type="button" class="btn btn-primary btn-sm meal-edit" role="button" onClick="createExistingChoices(${meal_identifier})" id="removeFoodButton" data-toggle="modal" data-target="#modal4">Remove Food</button></span>
   `);
+}
+
+function createExistingChoices(meal_identifier){
+  let meal_type = getMealDivName(meal_identifier);
+  let curr = document.getElementById(`${meal_type}Foods`).children;
+  for (i = 0; i < curr.length; i++) {
+    var specific_food = document.createElement("li");
+    var specific_food_id = document.createElement("p");
+    specific_food.append(curr[i].innerHTML);
+    // specific_food_id.append(`${food_item.id}`);
+    var existingSelection = document.createElement("input");
+    existingSelection.setAttribute("type", "checkbox");
+    specific_food.append(existingSelection);
+
+    document.getElementById('currentFoods').appendChild(specific_food);
+  }
 }
 
 function createAllChoices(meal_id){
   allFoods.forEach(function(food_item) {
     var specific_food = document.createElement("li");
     var specific_food_id = document.createElement("p");
-    specific_food.append(`${food_item.name}`);
+    specific_food.append(`${food_item.name}, ${food_item.calories} calories `);
     specific_food_id.append(`${food_item.id}`);
     var choiceSelection = document.createElement("input");
     choiceSelection.setAttribute("type", "checkbox");
@@ -78,8 +99,33 @@ function updateMeal(){
       var food_id = list_items[i].getElementsByTagName("p")[0].innerHTML;
       postFoodtoMeal(food_id, meal_id);
       hideModals();
+      document.getElementById('availableFoods').innerHTML = '';
     };
   }
+}
+
+function removeMealFood(){
+  var requestUrl = `${baseUrl}` + `api/v1/foods`;
+  var avail_foods = document.getElementById("availableFoods");
+  var meal_id = document.getElementById("mealIdentifier").innerHTML;
+  var checkmarks = avail_foods.getElementsByTagName("input");
+  var list_items = avail_foods.getElementsByTagName("li");
+  var data = {};
+
+  for (var i = 0, len = list_items.length; i < len; i++ ) {
+    if (checkmarks[ i ].checked){
+      var food_id = list_items[i].getElementsByTagName("p")[0].innerHTML;
+      postFoodtoMeal(food_id, meal_id);
+      hideModals();
+      document.getElementById('currentFoods').innerHTML = '';
+    };
+  }
+}
+
+function clearModal(){
+  hideModals();
+  document.getElementById('currentFoods').innerHTML = '';
+  document.getElementById('availableFoods').innerHTML = '';
 }
 
 function postFoodtoMeal(food_id, meal_id){
@@ -93,7 +139,7 @@ function postFoodtoMeal(food_id, meal_id){
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
      if (xhr.readyState == 4 && xhr.status == "201") {
-       console.log("cool");
+       console.log("Food added to meal");
        document.getElementById("")
        getDailyMeals();
      } else {
@@ -128,7 +174,7 @@ function calculateMealCals(foods){
   return total;
 }
 
-function getMealDiv(identifier){
+function getMealDivName(identifier){
   if (identifier == 1 || identifier == "Breakfast"){
     return "breakfast";
   } else if (identifier == 2 || identifier == "Lunch"){
@@ -137,6 +183,18 @@ function getMealDiv(identifier){
     return "snack";
   } else if (identifier == 4 || identifier == "Dinner"){
     return "dinner";
+  }
+}
+
+function getMealType(identifier){
+  if (identifier == "breakfast" || identifier == "Breakfast"){
+    return 1;
+  } else if (identifier == "lunch" || identifier == "Lunch"){
+    return 2;
+  } else if (identifier == "snack" || identifier == "Snack"){
+    return 3;
+  } else if (identifier == "dinner" || identifier == "Dinner"){
+    return 4;
   }
 }
 
@@ -197,7 +255,6 @@ function deleteFood(id_in) {
 }
 
 function makeFoodsList(array_in) {
-  console.log(array_in);
   var count = 0;
   array_in.forEach(function(element) {
     var id = element.id;
