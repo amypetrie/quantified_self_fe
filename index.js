@@ -3,6 +3,7 @@ const baseUrl = 'https://fast-meadow-36413.herokuapp.com/'
 var allFoods = null;
 window.onload = allClear('foods', getFoods);
 window.onload = getDailyMeals();
+window.onload = getAllMeals();
 
 function getDailyMeals() {
   var request = new XMLHttpRequest();
@@ -17,6 +18,56 @@ function getDailyMeals() {
     }
   }
   request.send();
+}
+
+function getAllMeals() {
+  var request = new XMLHttpRequest();
+  var uri = 'api/v1/meals'
+  request.open('GET', 'https://murmuring-bastion-46368.herokuapp.com/' + uri, true);
+  request.onload = function () {
+    if (this.status == 200) {
+      var data = JSON.parse(this.responseText);
+      populateAllMeals(data);
+    } else {
+      alert('Something went wrong');
+    }
+  }
+  request.send();
+}
+
+function populateAllMeals(meals_data){
+  meals_data.forEach(function(meal){
+    populateMeal(meal);
+  });
+}
+
+function populateMeal(meal_data, callback){
+
+  var meal_id = meal_data.id;
+  var date = meal_data.date;
+  // let date_time = timeConverter(date);
+  let meal_date = new Date(date).toDateString();
+  var meal_foods = meal_data.foods;
+  var meal_type = getMealDivName(meal_data.name);
+
+  let single_meal_div = document.createElement("div");
+  let date_header = document.createElement("h4");
+  let name_header = document.createElement("h5");
+  let food_list = document.createElement("ul");
+  date_header.innerHTML = `${meal_date}`;
+  name_header.innerHTML = `${meal_type}`;
+
+  meal_foods.forEach(function(food){
+    let food_item = document.createElement("li");
+    food_item.innerHTML = `${food.name}: ${food.calories} calories`
+    food_list.appendChild(food_item);
+  });
+
+  single_meal_div.append(date_header);
+  single_meal_div.append(name_header);
+  single_meal_div.append(food_list);
+
+  document.getElementById("historyBody").append(single_meal_div);
 }
 
 function populateDailyMeals(meals_data, callback){
@@ -61,7 +112,6 @@ function createExistingChoices(meal_identifier){
     var specific_food = document.createElement("li");
     var specific_food_id = document.createElement("p");
     specific_food.append(curr[i].innerHTML);
-    // specific_food_id.append(`${food_item.id}`);
     var existingSelection = document.createElement("input");
     existingSelection.setAttribute("type", "checkbox");
     specific_food.append(existingSelection);
