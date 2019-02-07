@@ -54,9 +54,9 @@ function populateSingleMeal(meal_data, meal_type){
   `);
 }
 
-function createExistingChoices(meal_id){
-  var meal_type = getMealDivName(meal_id);
-  var curr = document.getElementById(`${meal_type}Foods`).children;
+function createExistingChoices(meal_identifier){
+  let meal_type = getMealDivName(meal_identifier);
+  let curr = document.getElementById(`${meal_type}Foods`).children;
   for (i = 0; i < curr.length; i++) {
     var specific_food = document.createElement("li");
     var specific_food_id = document.createElement("p");
@@ -99,8 +99,33 @@ function updateMeal(){
       var food_id = list_items[i].getElementsByTagName("p")[0].innerHTML;
       postFoodtoMeal(food_id, meal_id);
       hideModals();
+      document.getElementById('availableFoods').innerHTML = '';
     };
   }
+}
+
+function removeMealFood(){
+  var requestUrl = `${baseUrl}` + `api/v1/foods`;
+  var avail_foods = document.getElementById("availableFoods");
+  var meal_id = document.getElementById("mealIdentifier").innerHTML;
+  var checkmarks = avail_foods.getElementsByTagName("input");
+  var list_items = avail_foods.getElementsByTagName("li");
+  var data = {};
+
+  for (var i = 0, len = list_items.length; i < len; i++ ) {
+    if (checkmarks[ i ].checked){
+      var food_id = list_items[i].getElementsByTagName("p")[0].innerHTML;
+      postFoodtoMeal(food_id, meal_id);
+      hideModals();
+      document.getElementById('currentFoods').innerHTML = '';
+    };
+  }
+}
+
+function clearModal(){
+  hideModals();
+  document.getElementById('currentFoods').innerHTML = '';
+  document.getElementById('availableFoods').innerHTML = '';
 }
 
 function postFoodtoMeal(food_id, meal_id){

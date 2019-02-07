@@ -121,7 +121,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 about-info js-matchheight wow fadeInLeft" data-wow-offset="10">
+          <div class="col-md-3 about-info js-matchheight wow fadeInLeft" data-wow-offset="10" id="lunch">
             <h3>Lunch</h3>
             <div class="row">
               <div class="col-xs-4">
@@ -136,7 +136,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 about-info js-matchheight wow fadeInLeft" data-wow-offset="10">
+          <div class="col-md-3 about-info js-matchheight wow fadeInLeft" data-wow-offset="10" id="snack">
             <h3>Snack</h3>
             <div class="row">
               <div class="col-xs-4">
@@ -151,7 +151,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 about-info js-matchheight wow fadeInLeft" data-wow-offset="10">
+          <div class="col-md-3 about-info js-matchheight wow fadeInLeft" data-wow-offset="10" id="dinner">
             <h3>Dinner</h3>
             <div class="row">
               <div class="col-xs-4">
@@ -197,7 +197,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Edit Food</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="clearModal()">
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -218,7 +218,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn" data-dismiss="modal">Close</button>
+            <button type="button" class="btn" data-dismiss="modal" onClick="clearModal()">Close</button>
             <a class="btn" onclick="saveFood()">Save Food</a>
           </div>
         </div>
@@ -230,7 +230,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Add New Food</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="clearModal()">
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -250,7 +250,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn" data-dismiss="modal">Close</button>
+            <button type="button" class="btn" data-dismiss="modal" onClick="clearModal()">Close</button>
             <a class="btn" onclick="addNewFood()">Add Food</a>
           </div>
         </div>
@@ -263,7 +263,7 @@
           <div class="modal-header">
             <h4 class="modal-title">Add Food to Meal </h4>
             <p id="mealIdentifier"></p>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="clearModal()">
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -271,7 +271,7 @@
               <ul id="availableFoods"></ul>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn" data-dismiss="modal">Close</button>
+            <button type="button" class="btn" data-dismiss="modal" onClick="clearModal()">Close</button>
             <a class="btn" onClick="updateMeal()">Update Meal</a>
           </div>
         </div>
@@ -283,7 +283,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Remove Food from Meal</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="clearModal()">
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -291,8 +291,8 @@
             <ul id="currentFoods"></ul>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn" data-dismiss="modal">Close</button>
-            <a class="btn" onClick="removeFood();">Live Site</a>
+            <button type="button" class="btn" data-dismiss="modal" onClick="clearModal()">Close</button>
+            <a class="btn" onClick="removeMealFood();">Remove Food(s)</a>
           </div>
         </div>
       </div>
